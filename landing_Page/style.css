@@ -1,0 +1,113 @@
+/* Base styles (Mobile-first approach) */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(to right, #88b0ef, #c497ec);
+    font-family: Arial, sans-serif;
+    color: #333;
+    overflow-x: hidden; /* Prevents horizontal scroll on smaller screens */
+}
+
+.center-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Use min-height to allow content to expand */
+    padding: 1rem; /* Smaller padding for mobile */
+    text-align: center;
+}
+
+.center-text {
+    margin-top: 1rem; /* Smaller margin for mobile */
+}
+
+.center-text h1 {
+    font-size: 2.5rem; /* Smaller font size for mobile */
+    font-weight: bold;
+    background: linear-gradient(to left, #4f46e5, #9333ea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    text-shadow:
+            1px 1px 1px rgba(0, 0, 0, 0.15), /* Adjusted shadow for smaller text */
+            2px 2px 4px rgba(0, 0, 0, 0.1),
+            0.5px 0.5px 0px #000;
+    margin-bottom: 1.5rem; /* Smaller margin */
+}
+
+.login-btn {
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none; /* for anchor */
+}
+
+.login-btn:hover {
+    background-color: #5b21b6;
+    transform: translateY(-2px);
+}
+
+.center-wrapper img {
+    width: 90%; /* Occupy more width on smaller screens */
+    height: auto;
+    max-width: 900px; /* Limits max width for larger screens */
+    margin-top: 1.5rem; /* Smaller margin for mobile */
+    border-radius: 12px;
+}
+
+/* --- Media Queries --- */
+
+/* Tablets (e.g., 768px and up) */
+@media (min-width: 768px) {
+    .center-text h1 {
+        font-size: 3.5rem; /* Larger font size for tablets */
+        margin-bottom: 2rem;
+    }
+
+    .center-wrapper img {
+        margin-top: 2rem;
+        width: 80%; /* Slightly smaller relative width */
+    }
+}
+
+/* Desktops (e.g., 1024px and up) */
+@media (min-width: 1024px) {
+    .center-wrapper {
+        padding: 2rem; /* Original padding */
+    }
+
+    .center-text h1 {
+        font-size: 4rem; /* Original font size for desktops */
+        text-shadow:
+                2px 2px 2px rgba(0, 0, 0, 0.25),
+                4px 4px 8px rgba(0, 0, 0, 0.2),
+                1px 1px 0px #000; /* Original text shadow */
+    }
+
+    .center-wrapper img {
+        width: 100%; /* Allows it to expand up to max-width */
+    }
+}
+
+/* Larger Desktops (e.g., 1200px and up) */
+@media (min-width: 1200px) {
+    .center-wrapper img {
+        max-width: 900px; /* Ensure it doesn't get too big */
+    }
+}
