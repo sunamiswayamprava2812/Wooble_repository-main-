@@ -1,0 +1,28 @@
+*{
+    box-sizing: border-box;
+}
+ body {
+            background: radial-gradient(circle at top left, #0B0D17 0%, #1E2130 70%);
+            color: #FFF;
+             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-weight: 300;
+        }
+        .main-content {
+            margin-top: 120px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            background: linear-gradient(145deg, #FFA500, #FF00FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 15px;
+            opacity: 0.8;
+            font-weight: lighter;
+        }
