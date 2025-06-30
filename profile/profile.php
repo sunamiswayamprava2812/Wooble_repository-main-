@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php session_start();
+include 'db_connection.php';
+?>
 
 
 <!DOCTYPE html>
@@ -245,21 +247,23 @@
 <!-- message Chatbox (hidden by default) -->
 <div id="chatBox" class="chat-box" style="display:none;">
     <div class="chat-header">
-        <img src="face.jpg" id="profile-image" style="height: 45px;width: 45px;border: 2px solid white;border-radius: 50%;object-fit: cover;" alt="img not found"/>
+        <img src="face.jpg" id="chat-profile-icon"
+             style="height: 45px;width: 45px;border: 2px solid white;border-radius: 50%;object-fit: cover;"
+             alt="img not found"/>
         <div style="margin-top: 15px">
             <span id="chat_loggername">Chat with Support</span>
           <p id="chat_profession" style="font-size: 11px; color: #7a7878; margin-top: -3px; letter-spacing: 0.2px;">hat wit</p>
         </div>
-        <button class="close-chat" onclick="closeChatBox()" style="   margin-top: -3rem;">×</button>
+        <button class="close-chat" onclick="closeChatBox()" style="margin: -1rem 0px 0px 8.5rem;">×</button>
     </div>
     <div class="chat-messages" id="chatMessages">
-        <div class="message received">Hello!</div>
+        <!--script-->
     </div>
     <div class="chat-input-area">
         <input type="text" id="chatInput" placeholder="Type a message...">
         <button onclick="sendMessage()">Send</button>
     </div>
-</div>Sunami@2812
+</div>
 
 
 <!-- TimeLine -->
@@ -290,7 +294,6 @@
 
             </div>
         </div>
-
 
     </div>
 
@@ -331,6 +334,10 @@
 <!-- javascript -->
 
 <script>
+
+    let profileUserId;
+    let senderId = sessionStorage.getItem('userId');
+
     document.addEventListener('DOMContentLoaded', function () {
         const updateBtn = document.getElementById('update-profile-pic');
         const fileInput = document.getElementById('profile-pic-input');
@@ -570,6 +577,42 @@
 
     // message Chatbox script
     function openChatBox() {
+        console.log(profileUserId);
+
+        $.ajax({
+            url: '../API/fetchMessages.php',
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                senderUserId: senderId,
+                user_id: profileUserId,
+            },
+            beforeSend: function () {
+                console.log('Sending user data' + profileUserId, senderId);
+            },
+            success: function (response) {
+                console.log('API 🐣 Response:', response);
+
+                const chatBox = document.getElementById('chatMessages');
+                chatBox.innerHTML = '';
+
+                if (Array.isArray(response) && response.length > 0) {
+                    response.forEach(msg => {
+                        const msgDiv = document.createElement('div');
+                        msgDiv.className = msg.sender_id === senderId ? 'message sent' : 'message received';
+                        msgDiv.textContent = msg.message;
+                        chatBox.appendChild(msgDiv);
+                    });
+
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }
+
+            },
+            error: function (xhr, status, error) {
+                console.error('API Error:', xhr.responseText, status, error);
+            }
+        });
+
         document.getElementById('chatBox').style.display = 'flex';
     }
 
@@ -577,17 +620,50 @@
         document.getElementById('chatBox').style.display = 'none';
     }
 
+
+    // send message
     function sendMessage() {
-        var input = document.getElementById('chatInput');
-        var message = input.value.trim();
-        if (message) {
-            var chatMessages = document.getElementById('chatMessages');
-            var messageDiv = document.createElement('div');
-            messageDiv.className = 'message sent';
-            messageDiv.textContent = message;
-            chatMessages.appendChild(messageDiv);
-            input.value = '';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+        const input = document.getElementById('chatInput');
+        const message = input.value.trim();
+        const chatBox = document.getElementById('chatMessages');
+
+        if (message !== "") {
+            console.log("Message:", message);
+
+            // Add message to chat box
+            const msgDiv = document.createElement("div");
+            msgDiv.className = "message sent";
+            msgDiv.textContent = message;
+            chatBox.appendChild(msgDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Store message
+
+            $.ajax({
+                url: '../API/storeMessage.php',
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    sender_id: senderId,
+                    receiver_id: profileUserId,
+                    message: message,
+                },
+                beforeSend: function () {
+                    console.log('Sending user data' + profileUserId, senderId, message);
+                },
+                success: function (response) {
+                    console.log('API Response:', response);
+                    if (response.status === 'success') {
+
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('API Error:', xhr.responseText, status, error);
+                }
+            });
+
+
+            input.value = "";
         }
     }
 
@@ -648,7 +724,7 @@
                     document.getElementById('mail').innerHTML = response.data.email;
                     document.getElementById('followCount').innerHTML = response.data.total_followers;
 
-                    const profileUserId = String(response.data.user_id); // ensure string comparison
+                    profileUserId = String(response.data.user_id); // ensure string comparison
                     const loggedInUserId = String(sessionStorage.getItem("userId")); // ensure string comparison
                     const connectBtn = document.getElementById("connectBtn");
 
@@ -684,6 +760,11 @@
                     let profileimage = response.data.profile_pic;
                     console.log('https://wooble.org/dms/' + iconimage);
                     document.getElementById('profile-image').src = 'https://wooble.org/dms/' + profileimage;
+
+                    // chat-profile icon
+                    let profile_image = response.data.profile_pic;
+                    console.log('https://wooble.org/dms/' + iconimage);
+                    document.getElementById('chat-profile-icon').src = 'https://wooble.org/dms/' + profile_image;
 
                     // modal image
                     let modalimage = response.data.profile_pic;
