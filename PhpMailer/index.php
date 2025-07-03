@@ -19,6 +19,7 @@
             padding: 4rem 5rem;
             background-color: #e8e1e1;
             border-radius: 15px;
+            box-shadow: 10px 20px 31px rgba(0, 0, 0, 0.116);
         }
 
         .contact .input-box input,
