@@ -17,7 +17,7 @@
 <header class="top-navbar">
     <div class="navbar-content">
         <div class="navbar-left">
-            <!--                        <p href="#" class="linkedin-logo" id="logo">hello</p>-->
+
             <div class="search-bar">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                      stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search">
@@ -85,7 +85,7 @@
 
             <!--  logout-->
             <?php if (isset($_SESSION['userId'])) {
-                echo '            <a href="../L_S_Page" class="nav-icon-link" title="LogIn">
+                echo '            <a href="../login-system-main/index.php" class="nav-icon-link" title="LogIn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                      class="bi bi-box-arrow-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"
@@ -96,7 +96,7 @@
                 <span>LogIn</span>
             </a>';
             } else {
-                echo '           <a href="logout.php" class="nav-icon-link" title="Logout">
+                echo '           <a href="../login-system-main/index.php" class="nav-icon-link" title="Logout">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                      class="bi bi-box-arrow-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"

@@ -7,3 +7,4 @@ services:
     volumes:
       - .:/var/www/html
     container_name: wooble_php_web
+ 
