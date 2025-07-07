@@ -1,6 +1,3 @@
-
-
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -79,7 +76,7 @@
             <?php
         } else {
             $fetch = $result->fetch_assoc();
-            
+
             if($fetch["status"] == 0){
             ?>
                <script>
@@ -93,6 +90,13 @@
 
             $_SESSION['token'] = $token;
             $_SESSION['email'] = $email;
+
+            $otp = rand(100000, 999999); // Generate a 6-digit OTP
+
+            // Store OTP in the database for the user
+            $stmt = $connect->prepare("UPDATE login SET otp = ? WHERE email = ?");
+            $stmt->bind_param("ss", $otp, $email);
+            $stmt->execute();
 
             require "Mail/phpmailer/PHPMailerAutoload.php";
             $mail = new PHPMailer;
@@ -111,7 +115,7 @@
             $mail->Debugoutput = 'html';
 
             $mail->setFrom('sunami@wooble.org', 'Password Reset');
-            
+
             $mail->addAddress($_POST["email"]);
 
 
@@ -119,8 +123,9 @@
             $mail->Subject="Recover your password";
             $mail->Body="<b>Dear User</b>
              <h3>We received a request to reset your password.</h3>
+             <p>Your OTP for password reset is: <b>$otp</b></p>
              <p>Kindly click the below link to reset your password</p>
-             <a href='http://localhost/login-system-main/reset_psw.php'>Reset Password</a>
+             <a href='http://localhost:63342/login-system-main/reset_psw.php?token=$token'>Reset Password</a>
              <br><br>
              <p>With regards,</p>
              <b>Wooble</b>";
