@@ -626,8 +626,6 @@ body {
     width: 180px;
 }
 
-
-
 .conversation-list {
     background: #fff;
 }
@@ -767,10 +765,14 @@ body {
     cursor: pointer;
 }
 
-
-
-
-
+.notifications {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    left: -35rem;
+    top: 15px;
+    position: relative;
+}
 
 @media (max-width: 1200px) {
     .page-container {

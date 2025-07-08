@@ -89,7 +89,7 @@ include('connect/connection.php');
             ?>
             <script>
                 window.location.replace("index.php");
-                alert("<?php echo "your password has been succesful reset"?>");
+                alert("<?php echo "your password has been successful reset"?>");
             </script>
             <?php
         }else{

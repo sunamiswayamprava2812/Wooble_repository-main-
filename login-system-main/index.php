@@ -2,109 +2,122 @@
 include('connect/connection.php');
 ?>
 
-
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link rel="stylesheet" href="style.css">
+    <title>Login - Wooble</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <title>Login Form</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #f8fafc;
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+        }
+
+        .centered-card {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-card {
+            border-radius: 1rem;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            padding: 2.5rem 2rem;
+            background: #fff;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-card .form-control {
+            border-radius: 2rem;
+        }
+
+        .login-card .btn-primary {
+            border-radius: 2rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #6366f1 0%, #60a5fa 100%);
+            border: none;
+        }
+
+        .login-card .btn-link {
+            color: #6366f1;
+            font-weight: 500;
+        }
+
+        .login-card .brand {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #6366f1;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .toggle-password {
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            color: #aaa;
+        }
+    </style>
 </head>
 <body>
-
-<nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
-    <div class="container">
-        <a class="navbar-brand" href="#">Login Form</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php" style="font-weight:bold; color:black; text-decoration:underline">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="register.php">Register</a>
-                </li>
-            </ul>
-
-        </div>
-    </div>
-</nav>
-
-<main class="login-form">
-    <div class="cotainer">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Login</div>
-                    <div class="card-body">
-                        <form id="loginForm" method="POST">
-                            <div class="form-group row">
-                                <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
-                                <div class="col-md-6">
-                                    <input type="text" id="email_address" class="form-control" name="email" required autofocus>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
-                                <div class="col-md-6">
-                                    <input type="password" id="password" class="form-control" name="password" required>
-                                    <i class="bi bi-eye-slash" id="togglePassword"></i>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <div class="col-md-6 offset-md-4">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="remember"> Remember Me
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">Login</button>
-                                <a href="recover_psw.php" class="btn btn-link">
-                                    Forgot Your Password?
-                                </a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-               
+<div class="centered-card">
+    <div class="login-card">
+        <div class="brand mb-4"> Login</div>
+        <form id="loginForm" method="POST" autocomplete="off">
+            <div class="form-group">
+                <label for="email_address">E-Mail Address</label>
+                <input type="text" class="form-control" id="email_address" name="email" required autofocus>
             </div>
-        </div>
+            <div class="form-group position-relative">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+                <span class="toggle-password" onclick="togglePassword()">
+                    <svg id="eyeIcon" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"
+                         viewBox="0 0 24 24" style="position: relative; top: 30px">
+                        <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                </span>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                <label class="form-check-label" for="remember">Remember Me</label>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+            <div class="text-center mt-3">
+                <a href="recover_psw.php" class="btn btn-link">Forgot Your Password?</a>
+            </div>
+            <div class="text-center mt-2">
+                <span>Don't have an account?</span>
+                <a href="register.php" class="btn btn-link">Register</a>
+            </div>
+        </form>
     </div>
-</main>
-</body>
-</html>
-
+</div>
 <script>
-    const toggle = document.getElementById('togglePassword');
-    const password = document.getElementById('password');
-
-    toggle.addEventListener('click', function(){
-        if(password.type === "password"){
-            password.type = 'text';
-        }else{
-            password.type = 'password';
+    function togglePassword() {
+        var passwordInput = document.getElementById('password');
+        var eyeIcon = document.getElementById('eyeIcon');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.innerHTML = '<path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.77 21.77 0 0 1 5.06-6.06M1 1l22 22"/><circle cx="12" cy="12" r="3"/>';
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.innerHTML = '<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/>';
         }
-        this.classList.toggle('bi-eye');
-    });
-
+    }
+</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
     $('#loginForm').on('submit', function(e) {
         e.preventDefault();
         var email = $('#email_address').val();
@@ -118,7 +131,6 @@ include('connect/connection.php');
             
                 alert(response.message);
                 if(response.success) {
-                   alert('Login successful!');
                     $.ajax({
                         url: 'https://wooble.io/api/portfolio/FetchUserData.php',
                         type: 'POST',
@@ -134,15 +146,13 @@ include('connect/connection.php');
                                 sessionStorage.setItem("username", response.data.username);
                                 window.location.href = '../feed/feed.php?username='+response.data.username;
                             } else {
-                                alert('Login failed: ' + response.message);
+                                console.log('Login failed: ' + response.message);
                             }
                         },
                         error: function (xhr, status, error) {
                             console.error('AJAX Error:', status, error);
                         }
                     });
-                } else {
-                    alert('Login failed: ' + response.message);
                 }
             },
             error: function(xhr, status, error) {
@@ -151,3 +161,5 @@ include('connect/connection.php');
         });
     });
 </script>
+</body>
+</html>

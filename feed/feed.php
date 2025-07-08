@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php session_start();
+include('../login-system-main/connect/connection.php');
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,17 +49,6 @@
                 </svg>
                 <span>My Network</span>
             </a>
-
-            <a href="#" class="nav-icon-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                     stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users">
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                    <circle cx="9" cy="7" r="4"/>
-                    <path d="M22 21v-2a4 4 0 0 0-3-3.87l-1-.13a4 4 0 0 0-3 3.87v2"/>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
-                <span>My Network</span>
-            </a>
             <a href="#" class="nav-icon-link">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                      stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase">
@@ -74,7 +66,7 @@
             </a>
 
 
-            <a href="#" class="nav-icon-link">
+            <a href="#" class="nav-icon-link" onclick="showPage('notifications'); return false;">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                      stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell">
                     <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
@@ -529,15 +521,93 @@
 
 </div>
 
+<!--notificationpage-->
+<div id="notificationsPage" style="display:none; margin-top: 10px; position: relative; left: -10px">
+    <div style="display: flex;">
+        <div class="page-container">
+            <!-- Left Sidebar -->
+            <aside class="left-sidebar">
 
+                <div class="profile-card profile-pic">
+                    <div class="profilepic" style="cursor: pointer">
+                        <div class="profile-bg">
+                            <!-- Placeholder for background image -->
+                            <img src="#"
+                                 alt="banner-img not found" id="notification-banner_img"
+                                 style="width: 100%; height: 100%; object-fit: cover; border-top-left-radius: 8px; border-top-right-radius: 8px;">
+                        </div>
+
+                        <img src="#" class="profile-img" id="notification-profile-image">
+                        <div class="profile-name" id="notification-name">Virat Kohli</div>
+                        <div class="profile-title" id="notification-bio">
+                            Based on the screenshot you provided, while there is an image in a post that appears to show
+                            athletes or
+                            a sports team, the names of the players themselves are not visible or mentioned in the text
+                            of
+                            the
+                            screenshot.
+                        </div>
+                        <div class="location" id="notification-location">
+                            khordha , Odisha
+                        </div>
+                    </div>
+
+                    <div class="profile-stats">
+                        <div class="followers" style="cursor: pointer">
+                            <span>followers</span>
+                            <span id="notification-followers">500+</span>
+                        </div>
+                        <div>
+                            <a href="#">Views of post</a>
+                            <span>250</span>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </aside>
+
+
+        <!-- Main Notifications Area -->
+        <main class="main">
+
+            <!-- Notification List -->
+            <div class="notifications">
+
+                <div class="card">
+                    <p><strong>Premananda Biswal</strong> posted: Aspiring Data Analyst | Skilled in Visualization,
+                        Insight
+                        Communication...</p>
+                </div>
+
+                <div class="card">
+                    <p>Your Monday Jobs Report: <strong>99 companies</strong> increased hiring for Full Stack Engineer
+                        roles.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <p><strong>Suggested for you:</strong> Signs you’re in a “LALA COMPANY”... (truncated)</p>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</div>
+</div>
+
+
+<!--nav click button script-->
 <script>
     function showPage(page) {
         document.getElementById('mainContent').style.display = 'none';
         document.getElementById('messagingPage').style.display = 'none';
+        document.getElementById('notificationsPage').style.display = 'none';
         if (page === 'home') {
             document.getElementById('mainContent').style.display = 'block';
         } else if (page === 'messaging') {
             document.getElementById('messagingPage').style.display = 'block';
+        } else if (page === 'notifications') {
+            document.getElementById('notificationsPage').style.display = 'block';
         }
     }
 </script>
@@ -546,7 +616,7 @@
 
 <!--javascript-->
 <script>
-    <!-- toggle input click button-->
+    // toggle input click button
     const openModalBtn = document.getElementById('openModalBtn');
     const closeModalBtn = document.getElementById('closeModalBtn');
     const modal = document.getElementById('postModal');
@@ -668,9 +738,16 @@
 
                     document.getElementById('name').innerHTML = response.data.name;
                     document.getElementById('profile-name').innerHTML = response.data.name;
+                    document.getElementById('notification-name').innerHTML = response.data.name;
+
                     document.getElementById('bio').innerHTML = response.data.bio;
+                    document.getElementById('notification-bio').innerHTML = response.data.bio;
+
                     document.getElementById('location').innerHTML = response.data.location;
+                    document.getElementById('notification-location').innerHTML = response.data.location;
+
                     document.getElementById('total_followers').innerHTML = response.data.total_followers;
+                    document.getElementById('notification-followers').innerHTML = response.data.total_followers;
 
                     // profile image and icon
                     let icon_image = response.data.profile_pic;
@@ -684,6 +761,8 @@
                     document.getElementById('profile-icon').src = userProfilePic;
                     document.getElementById('profile-image').src = userProfilePic;
                     document.getElementById('profileicon').src = userProfilePic;
+                    document.getElementById('notification-profile-image').src = userProfilePic;
+
 
                     // banner image
                     let image = response.data.banner_img;
