@@ -521,7 +521,8 @@ include('../login-system-main/connect/connection.php');
 
 </div>
 
-<!--notificationpage-->
+
+<!--  notifications section -->
 <div id="notificationsPage" style="display:none; margin-top: 10px; position: relative; left: -10px">
     <div style="display: flex;">
         <div class="page-container">
@@ -531,7 +532,7 @@ include('../login-system-main/connect/connection.php');
                 <div class="profile-card profile-pic">
                     <div class="profilepic" style="cursor: pointer">
                         <div class="profile-bg">
-                            <!-- Placeholder for background image -->
+                            <!-- Placeholder for banner image -->
                             <img src="#"
                                  alt="banner-img not found" id="notification-banner_img"
                                  style="width: 100%; height: 100%; object-fit: cover; border-top-left-radius: 8px; border-top-right-radius: 8px;">
@@ -541,11 +542,7 @@ include('../login-system-main/connect/connection.php');
                         <div class="profile-name" id="notification-name">Virat Kohli</div>
                         <div class="profile-title" id="notification-bio">
                             Based on the screenshot you provided, while there is an image in a post that appears to show
-                            athletes or
-                            a sports team, the names of the players themselves are not visible or mentioned in the text
-                            of
-                            the
-                            screenshot.
+                            athletes
                         </div>
                         <div class="location" id="notification-location">
                             khordha , Odisha
@@ -563,59 +560,77 @@ include('../login-system-main/connect/connection.php');
                         </div>
                     </div>
                 </div>
+            </aside>
+
         </div>
-        </aside>
 
-
-        <!-- Main Notifications Area -->
         <main class="main">
-
-            <!-- Notification List -->
-            <div class="notifications">
-
-                <div class="card">
-                    <p><strong>Premananda Biswal</strong> posted: Aspiring Data Analyst | Skilled in Visualization,
-                        Insight
-                        Communication...</p>
-                </div>
-
-                <div class="card">
-                    <p>Your Monday Jobs Report: <strong>99 companies</strong> increased hiring for Full Stack Engineer
-                        roles.
-                    </p>
-                </div>
-
-                <div class="card">
-                    <p><strong>Suggested for you:</strong> Signs you’re in a “LALA COMPANY”... (truncated)</p>
-                </div>
-
-            </div>
+            <h4>Notifications</h4>
+            <ul id="notificationList"></ul>
         </main>
     </div>
 </div>
-</div>
 
 
-<!--nav click button script-->
+<!--javascript-->
 <script>
+
+    //  nav click button script
     function showPage(page) {
         document.getElementById('mainContent').style.display = 'none';
         document.getElementById('messagingPage').style.display = 'none';
         document.getElementById('notificationsPage').style.display = 'none';
+
         if (page === 'home') {
             document.getElementById('mainContent').style.display = 'block';
         } else if (page === 'messaging') {
             document.getElementById('messagingPage').style.display = 'block';
         } else if (page === 'notifications') {
             document.getElementById('notificationsPage').style.display = 'block';
+            loadNotifications();
         }
     }
-</script>
 
 
+    function loadNotifications() {
+        const userId = sessionStorage.getItem('userId');
 
-<!--javascript-->
-<script>
+        $.ajax({
+            url: '../API/get_notifications.php',
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                user_id: userId
+            }),
+            success: function (response) {
+                const list = $('#notificationList');
+                list.empty();
+
+                if (response.status === 'success' && response.data.length > 0) {
+                    response.data.forEach(n => {
+                        let text = '';
+                        if (type === 'post-like') {
+                            text = `<b>${sender_username}</b> liked your post.`;
+                        } else if (type === 'comment') {
+                            text = `<b>${sender_username}</b> commented: "${commentText || 'on your post'}"`;
+                        } else {
+                            text = `<b>${sender_username}</b> sent a notification.`;
+                        }
+
+                        list.append(`<li style="margin-bottom:10px;">${text}<br><small>${n.created_at}</small></li>`);
+                    });
+                } else {
+                    list.append('<p>No notifications yet.</p>');
+                }
+            },
+            error: function (xhr) {
+                console.error('Failed to load notifications:', xhr.responseText);
+        }
+        });
+    }
+
+
     // toggle input click button
     const openModalBtn = document.getElementById('openModalBtn');
     const closeModalBtn = document.getElementById('closeModalBtn');
@@ -639,8 +654,8 @@ include('../login-system-main/connect/connection.php');
         }
     };
 
-    <!-- toggle plus button-->
 
+    <!-- toggle plus button-->
     const plusBtn = document.getElementById("toggleExtraBtns");
     const extraBtns = document.querySelector(".extra-buttons");
 
@@ -652,14 +667,16 @@ include('../login-system-main/connect/connection.php');
             extraBtns.style.display = "none";
         }
     });
-// toggle post button
+
+
+    // toggle post button
     document.addEventListener("DOMContentLoaded", function () {
         const textarea = document.querySelector(".modal-textarea");
+        comment-input
         const postBtn = document.querySelector(".post-btn");
 
         // Disable button initially
         postBtn.disabled = true;
-
         textarea.addEventListener("input", function () {
             const text = textarea.value.trim();
             postBtn.disabled = text.length === 0;
@@ -674,6 +691,7 @@ include('../login-system-main/connect/connection.php');
             this.classList.add('active');
         });
     });
+
 
     <!--seemore seeless toggle button-->
     document.addEventListener('DOMContentLoaded', function () {
@@ -926,7 +944,7 @@ include('../login-system-main/connect/connection.php');
             </button>
 
 <!--comment button-->
-            <button class="post-action-button comment-toggle-btn" data-question-id="${data.question_id}">
+            <button class="post-action-button comment-toggle-btn" data-question-id="${data.question_id}" data-user-id="${data.user_id}">
                 Comment
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat" viewBox="0 0 16 16">
                     <path d="M2.678 11.894a1 1 0 0 1 .287.801 11 11 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8 8 0 0 0 8 14c3.996 0 7-2.807 7-6s-3.004-6-7-6-7 2.808-7 6c0 1.468.617 2.83 1.678 3.894m-.493 3.905a22 22 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a10 10 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105"/>
@@ -968,6 +986,44 @@ include('../login-system-main/connect/connection.php');
 
 
 
+    // add notification to localDB
+
+    function addtolocalDB(postuserId, type, logInuser, questionid, isLiked, commentText) {
+        console.log('add to local function execute');
+        console.log('post user Id', postuserId);
+        console.log('logInuser', logInuser);
+        console.log('questionid', questionid);
+        console.log('isLiked', isLiked);
+        const message = type === 'post-like' ? "Post Liked" : "Commented on your post";
+
+
+        $.ajax({
+            url: '../API/add_notification.php',
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                user_id: postuserId,
+                type: type,
+                sender_id: logInuser,
+                message: message,
+                commentText: commentText,
+            }),
+            success: function (response) {
+                if (response.success === true) {
+                    console.log(response);
+                } else {
+                    console.log(response);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('API Error:', xhr.responseText, status, error);
+            }
+        });
+    }
+
+
+
 
     // click like_button
     document.addEventListener("click", function (e) {
@@ -975,12 +1031,13 @@ include('../login-system-main/connect/connection.php');
         if (likeBtn) {
 
             const questionid = likeBtn.dataset.questionId;
+            const postuserId = likeBtn.dataset.userId;
             const logInuser = sessionStorage.getItem('userId');
-            console.log('logInuser', logInuser);
-            console.log('questionid', questionid);
 
             const isLiked = likeBtn.dataset.liked === "true";
-            console.log('isLiked', isLiked);
+
+            addtolocalDB(postuserId, 'post-like', logInuser, questionid, isLiked);
+
             $.ajax({
                 url: 'https://wooble.io/feed/discussion_api/topic_like_dislike.php',
                 method: 'POST',
@@ -1030,20 +1087,29 @@ include('../login-system-main/connect/connection.php');
             const isVisible = commentBox.style.display === "block";
             commentBox.style.display = isVisible ? "none" : "block";
 
-            commentBox.innerHTML = '<p>Loading...</p>';
+            const postuserId = toggleBtn.dataset.userId;
+            const logInuser = sessionStorage.getItem('userId');
+            console.log(postuserId);
+
+
+            addtolocalDB(postuserId, "post-comment", logInuser, questionId, false, "");
+
+
 
 
             $.ajax({
                 url: 'https://wooble.io/feed/discussion_api/fetch_questionComments.php',
                 method: 'POST',
                 dataType: 'json',
-                data: {question_id: questionId},
+                data: {
+                    user_id: logInuser,
+                    question_id: questionId
+                },
                 success: function (response) {
                     console.log(response);
                     if (response.success === true && Array.isArray(response.comments)) {
                         populateCommentBox(response.comments, commentBox);
                     } else {
-                        // Handle no comments case
                         commentBox.innerHTML = '<p>No comments found for this question.</p>';
                     }
 
@@ -1054,6 +1120,7 @@ include('../login-system-main/connect/connection.php');
                 }
             });
 
+
             // This function will take the array of comments and the target div
             function populateCommentBox(comments, targetCommentBox) {
 
@@ -1062,6 +1129,10 @@ include('../login-system-main/connect/connection.php');
                 // comment-input-section
                 const newCommentInputSection = document.createElement('div');
                 newCommentInputSection.className = 'comment-input-section';
+                newCommentInputSection.style.display = 'flex';
+                newCommentInputSection.style.alignItems = 'flex-start';
+                newCommentInputSection.style.marginTop = '10px';
+
 
                 newCommentInputSection.innerHTML = `
         <img
@@ -1069,13 +1140,19 @@ include('../login-system-main/connect/connection.php');
             src="${userProfilePic}"
             alt="Profile Picture"
             class="post-profile-pic"
-            style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; margin-right: 10px; ">
+            style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; margin-right: 10px;">
+        <div>
+            <input type="text" placeholder="Add a comment..." class="comment-input"
+               style="flex-grow: 1; padding: 12px; border: 1px solid #e0e0e0; border-radius: 24px; outline: none; font-size: 15px; width: 20rem;">
 
-        <input type="text" placeholder="Add a comment..." class="comment-input"
-               style="flex-grow: 1; padding: 12px; border: 1px solid #e0e0e0; border-radius: 24px; outline: none; font-size: 15px; margin-top: 10px">
+            <button class="post-comment-btn" style="margin-left:10px; padding:8px 16px; border:none; background:#1877f2; color:white; border-radius:20px; cursor:pointer; margin-top:10px;">
+                Post
+            </button>
+        </div>
     `;
 
                 targetCommentBox.appendChild(newCommentInputSection);
+
 
                 // comments-users
                 comments.forEach(comment => {
@@ -1095,11 +1172,6 @@ include('../login-system-main/connect/connection.php');
             <div class="comment-text" style="margin-left: 40px; font-size: 14px;">
                 ${comment.comment_text}
             </div>
-            <div class="like_reply" >
-                  <div>Like</div>
-                    <div>|</div>
-                    <div>Reply</div>
-            </div>
             <hr style="border: none; border-top: 1px solid #eee; margin: 10px 0;">
         `;
                     targetCommentBox.appendChild(commentDiv);
@@ -1107,6 +1179,7 @@ include('../login-system-main/connect/connection.php');
             }
         }
     });
+
 
 
     // visit another profile as a user
