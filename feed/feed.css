@@ -25,7 +25,6 @@ body {
     z-index: 1000;
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
 }
-
 .navbar-content {
     max-width: 1128px;
     margin: 0 auto;
@@ -78,33 +77,9 @@ body {
     transition: color 0.2s;
 }
 
-.nav-icon-link:hover {
-    color: #000;
-
-}
-
 .nav-icon-link span {
     font-size: 12px;
 }
-
-.nav-icon-link::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    height: 3px;
-    width: 100%;
-    background-color: #000;
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: transform 0.3s ease-in-out;
-}
-
-.nav-icon-link.active::after {
-    transform: scaleX(1);
-}
-
-
 .nav-icon-link svg {
     width: 24px;
     height: 24px;
@@ -764,7 +739,11 @@ body {
     border-radius: 20px;
     cursor: pointer;
 }
-
+.nav-icon-link.active {
+    background-color: #e0e0e0;
+    color: #0073b1;
+    border-radius: 6px;
+}
 
 @media (max-width: 1200px) {
     .page-container {

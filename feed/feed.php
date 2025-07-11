@@ -17,95 +17,7 @@ include('../login-system-main/connect/connection.php');
 </head>
 <body>
 <!-- Top Navigation Bar -->
-<header class="top-navbar">
-    <div class="navbar-content">
-        <div class="navbar-left">
-
-            <div class="search-bar">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                     stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search">
-                    <circle cx="11" cy="11" r="8"/>
-                    <path d="m21 21-4.3-4.3"/>
-                </svg>
-                <input type="text" placeholder="Search">
-            </div>
-        </div>
-        <nav class="navbar-right ">
-            <a href="#" class="nav-icon-link active" onclick="showPage('home'); return false;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                     stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home">
-                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                    <polyline points="9 22 9 12 15 12 15 22"/>
-                </svg>
-                <span>Home</span>
-            </a>
-            <a href="#" class="nav-icon-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                     stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users">
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                    <circle cx="9" cy="7" r="4"/>
-                    <path d="M22 21v-2a4 4 0 0 0-3-3.87l-1-.13a4 4 0 0 0-3 3.87v2"/>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
-                <span>My Network</span>
-            </a>
-            <a href="#" class="nav-icon-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                     stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase">
-                    <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
-                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-                </svg>
-                <span>Jobs</span>
-            </a>
-
-            <a href="#" class="nav-icon-link" onclick="showPage('messaging'); return false;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-chat" viewBox="0 0 16 16">
-                    <path d="M2.678 11.894a1 1 0 0 1 .287.801 11 11 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8 8 0 0 0 8 14c3.996 0 7-2.807 7-6s-3.004-6-7-6-7 2.808-7 6c0 1.468.617 2.83 1.678 3.894m-.493 3.905a22 22 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a10 10 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105"></path>
-                </svg>
-                <span>Messaging</span>
-            </a>
-
-
-            <a href="#" class="nav-icon-link" onclick="showPage('notifications'); return false;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                     stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell">
-                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
-                    <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
-                </svg>
-                <span>Notifications</span>
-            </a>
-
-            <!--  logout-->
-            <?php if (isset($_SESSION['userId'])) {
-                echo '            <a href="../login-system-main/index.php" class="nav-icon-link" title="LogIn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                     class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                          d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
-                    <path fill-rule="evenodd"
-                          d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
-                </svg>
-                <span>LogIn</span>
-            </a>';
-            } else {
-                echo '           <a href="../login-system-main/index.php" class="nav-icon-link" title="Logout">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                     class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                          d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
-                    <path fill-rule="evenodd"
-                          d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
-                </svg>
-                <span>LogOut</span>
-            </a>';
-            } ?>
-        </nav>
-
-
-
-
-    </div>
-</header>
+<?php include 'component/f-nav.php'; ?>
 
 <!-- Main Content Area (Feed) -->
 <div id="mainContent" class="page-container">
@@ -113,106 +25,7 @@ include('../login-system-main/connect/connection.php');
     <div class="page-container">
 
         <!-- Left Sidebar -->
-        <aside class="left-sidebar">
-
-            <div class="profile-card profile-pic">
-                <div class="profilepic" style="cursor: pointer">
-                    <div class="profile-bg">
-                        <!-- Placeholder for background image -->
-                        <img src="#"
-                             alt="banner-img not found" id="banner_img"
-                             style="width: 100%; height: 100%; object-fit: cover; border-top-left-radius: 8px; border-top-right-radius: 8px;">
-                    </div>
-
-                    <img src="#"
-                         alt="Profile Picture" class="profile-img" id="profile-image">
-                    <div class="profile-name" id="name">Virat Kohli</div>
-                    <div class="profile-title" id="bio">
-                        Based on the screenshot you provided, while there is an image in a post that appears to show
-                        athletes or
-                        a sports team, the names of the players themselves are not visible or mentioned in the text of the
-                        screenshot.
-                    </div>
-                    <div class="location" id="location">
-                        khordha , Odisha
-                    </div>
-                </div>
-
-                <div class="profile-stats">
-                    <div class="followers" style="cursor: pointer">
-                        <span>followers</span>
-                        <span id="total_followers">500+</span>
-                    </div>
-                    <div>
-                        <a href="#">Views of post</a>
-                        <span>250</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="profile-cards-item">
-                <div class="cards">
-                    <div class="card-header">
-                        <p>Profile viewers</p>
-                        <p>218</p>
-                    </div>
-                    <div class="card-header">
-                        <p>Post impressions</p>
-                        <p>86</p>
-                    </div>
-                </div>
-
-                <div class="cards">
-
-                    <p>Achieve your career goals</p>
-                    <p>Try Premium for ₹0</p>
-                </div>
-
-                <div class="cards-item">
-                    <ul class="cards-list">
-                        <li class="card-link">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-bookmark-fill" viewBox="0 0 16 16">
-                                <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2"/>
-                            </svg>
-                            <span>Saved items</span>
-                        </li>
-                        <li class="card-link">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-people-fill" viewBox="0 0 16 16">
-                                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
-                            </svg>
-                            <span>Groups</span>
-                        </li>
-                        <li class="card-link">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-file-text-fill" viewBox="0 0 16 16">
-                                <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1m-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5M5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1m0 2h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1"/>
-                            </svg>
-                            <span>Newsletters</span>
-                        </li>
-                        <li class="card-link">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-calendar2-event-fill" viewBox="0 0 16 16">
-                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5m9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5M11.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
-                            </svg>
-                            <span>Events</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!--toggle button-->
-            <button class="see-more-btn d-md-none">
-                See more
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                     fill="currentColor" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                          d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67"/>
-                </svg>
-            </button>
-
-        </aside>
+      <?php include 'component/profile-card.php'; ?>
 
 
         <!-- Main Content Area (Feed) -->
@@ -491,235 +304,8 @@ include('../login-system-main/connect/connection.php');
     </div>
 </div>
 
-
-<!-- Messaging Content -->
-<div id="messagingPage" style="display:none;">
-    <!-- Messaging Header -->
-    <div class="messaging-header">
-        <h2>Messaging</h2>
-        <input type="text" class="message-search" placeholder="Search messages">
-    </div>
-
-    <!-- Messaging List -->
-    <div class="conversation-list">
-        <div class="conversation-item selected">
-            <div class="avatar-wrapper">
-                <img class="avatar" src="" alt="">
-            </div>
-            <div class="conversation-details">
-                <div class="conversation-header">
-                    <span class="user-name">Laxmipriya Sahoo</span>
-                    <span class="message-time">10:59 AM</span>
-                </div>
-                <div class="message-preview">
-                    This sender appears to be trying to move the...
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-</div>
-
-
-<!--  notifications section -->
-<div id="notificationsPage" style="display:none; margin-top: 10px; position: relative; left: -10px">
-    <div style="display: flex;">
-        <div class="page-container">
-            <!-- Left Sidebar -->
-            <aside class="left-sidebar">
-
-                <div class="profile-card profile-pic">
-                    <div class="profilepic" style="cursor: pointer">
-                        <div class="profile-bg">
-                            <!-- Placeholder for banner image -->
-                            <img src="#"
-                                 alt="banner-img not found" id="notification-banner_img"
-                                 style="width: 100%; height: 100%; object-fit: cover; border-top-left-radius: 8px; border-top-right-radius: 8px;">
-                        </div>
-
-                        <img src="#" class="profile-img" id="notification-profile-image">
-                        <div class="profile-name" id="notification-name">Virat Kohli</div>
-                        <div class="profile-title" id="notification-bio">
-                            Based on the screenshot you provided, while there is an image in a post that appears to show
-                            athletes
-                        </div>
-                        <div class="location" id="notification-location">
-                            khordha , Odisha
-                        </div>
-                    </div>
-
-                    <div class="profile-stats">
-                        <div class="followers" style="cursor: pointer">
-                            <span>followers</span>
-                            <span id="notification-followers">500+</span>
-                        </div>
-                        <div>
-                            <a href="#">Views of post</a>
-                            <span>250</span>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-
-        </div>
-
-        <main class="main">
-            <h4>Notifications</h4>
-            <ul id="notificationList"></ul>
-        </main>
-    </div>
-</div>
-
-
 <!--javascript-->
-<script>
-
-    //  nav click button script
-    function showPage(page) {
-        document.getElementById('mainContent').style.display = 'none';
-        document.getElementById('messagingPage').style.display = 'none';
-        document.getElementById('notificationsPage').style.display = 'none';
-
-        if (page === 'home') {
-            document.getElementById('mainContent').style.display = 'block';
-        } else if (page === 'messaging') {
-            document.getElementById('messagingPage').style.display = 'block';
-        } else if (page === 'notifications') {
-            document.getElementById('notificationsPage').style.display = 'block';
-            loadNotifications();
-        }
-    }
-
-
-    function loadNotifications() {
-        const userId = sessionStorage.getItem('userId');
-
-        $.ajax({
-            url: '../API/get_notifications.php',
-            method: 'POST',
-            dataType: 'json',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                user_id: userId
-            }),
-            success: function (response) {
-                const list = $('#notificationList');
-                list.empty();
-
-                if (response.status === 'success' && response.data.length > 0) {
-                    response.data.forEach(n => {
-                        let text = '';
-                        if (type === 'post-like') {
-                            text = `<b>${sender_username}</b> liked your post.`;
-                        } else if (type === 'comment') {
-                            text = `<b>${sender_username}</b> commented: "${commentText || 'on your post'}"`;
-                        } else {
-                            text = `<b>${sender_username}</b> sent a notification.`;
-                        }
-
-                        list.append(`<li style="margin-bottom:10px;">${text}<br><small>${n.created_at}</small></li>`);
-                    });
-                } else {
-                    list.append('<p>No notifications yet.</p>');
-                }
-            },
-            error: function (xhr) {
-                console.error('Failed to load notifications:', xhr.responseText);
-        }
-        });
-    }
-
-
-    // toggle input click button
-    const openModalBtn = document.getElementById('openModalBtn');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    const modal = document.getElementById('postModal');
-    const overlay = document.getElementById('overlay');
-
-    openModalBtn.onclick = () => {
-        modal.style.display = 'block';
-        overlay.style.display = 'block';
-    };
-
-    closeModalBtn.onclick = () => {
-        modal.style.display = 'none';
-        overlay.style.display = 'none';
-    };
-
-    window.onclick = (e) => {
-        if (e.target === overlay) {
-            modal.style.display = 'none';
-            overlay.style.display = 'none';
-        }
-    };
-
-
-    <!-- toggle plus button-->
-    const plusBtn = document.getElementById("toggleExtraBtns");
-    const extraBtns = document.querySelector(".extra-buttons");
-
-    plusBtn.addEventListener("click", () => {
-        if (extraBtns.style.display === "none" || extraBtns.style.display === "") {
-            extraBtns.style.display = "flex";
-            plusBtn.style.display = "none";
-        } else {
-            extraBtns.style.display = "none";
-        }
-    });
-
-
-    // toggle post button
-    document.addEventListener("DOMContentLoaded", function () {
-        const textarea = document.querySelector(".modal-textarea");
-        comment-input
-        const postBtn = document.querySelector(".post-btn");
-
-        // Disable button initially
-        postBtn.disabled = true;
-        textarea.addEventListener("input", function () {
-            const text = textarea.value.trim();
-            postBtn.disabled = text.length === 0;
-        });
-    });
-
-
-    <!--nav-icon-link(hr) clickable-->
-    document.querySelectorAll('.nav-icon-link').forEach(link => {
-        link.addEventListener('click', function () {
-            document.querySelectorAll('.nav-icon-link').forEach(el => el.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
-
-
-    <!--seemore seeless toggle button-->
-    document.addEventListener('DOMContentLoaded', function () {
-        const seeMoreBtn = document.querySelector('.see-more-btn');
-        const profilecardsitem = document.querySelector('.profile-cards-item');
-
-        seeMoreBtn.addEventListener('click', function () {
-            profilecardsitem.classList.toggle('show');
-
-            const isShown = profilecardsitem.classList.contains('show');
-            const label = isShown ? 'See less' : 'See more';
-            const icon = isShown
-                ? `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                           class="bi bi-chevron-compact-up" viewBox="0 0 16 16">
-                       <path fill-rule="evenodd"
-                             d="M7.776 5.553a.5.5 0 0 1 .448 0l6 3a.5.5 0 1 1-.448.894L8 6.56 2.224 9.447a.5.5 0 1 1-.448-.894z"/>
-                   </svg>`
-                : `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                           class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
-                       <path fill-rule="evenodd"
-                             d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67"/>
-                   </svg>`;
-
-            this.innerHTML = `${label} ${icon}`;
-        });
-    });
-</script>
-
+<script src="feed.js"></script>
 
 <!--jquery-->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -753,20 +339,6 @@ include('../login-system-main/connect/connection.php');
             success: function (response) {
                 if (response.status === 'success') {
 
-
-                    document.getElementById('name').innerHTML = response.data.name;
-                    document.getElementById('profile-name').innerHTML = response.data.name;
-                    document.getElementById('notification-name').innerHTML = response.data.name;
-
-                    document.getElementById('bio').innerHTML = response.data.bio;
-                    document.getElementById('notification-bio').innerHTML = response.data.bio;
-
-                    document.getElementById('location').innerHTML = response.data.location;
-                    document.getElementById('notification-location').innerHTML = response.data.location;
-
-                    document.getElementById('total_followers').innerHTML = response.data.total_followers;
-                    document.getElementById('notification-followers').innerHTML = response.data.total_followers;
-
                     // profile image and icon
                     let icon_image = response.data.profile_pic;
                     icon_image = atob(icon_image);
@@ -777,16 +349,13 @@ include('../login-system-main/connect/connection.php');
                     userProfilePic = 'https://wooble.org/dms/' + reEncoded;
 
                     document.getElementById('profile-icon').src = userProfilePic;
-                    document.getElementById('profile-image').src = userProfilePic;
                     document.getElementById('profileicon').src = userProfilePic;
-                    document.getElementById('notification-profile-image').src = userProfilePic;
 
 
                     // banner image
                     let image = response.data.banner_img;
                     console.log('Banner image raw value:', image);
                     document.getElementById('banner_img').src = image;
-
                 }
 
             },
@@ -993,8 +562,15 @@ include('../login-system-main/connect/connection.php');
         console.log('post user Id', postuserId);
         console.log('logInuser', logInuser);
         console.log('questionid', questionid);
-        console.log('isLiked', isLiked);
-        const message = type === 'post-like' ? "Post Liked" : "Commented on your post";
+        console.log('type', type);
+        let message;
+        if (type === 'post-like') {
+            message = "Post Liked";
+        } else if (type === 'post-comment') {
+            message = "Commented: " + commentText;
+        } else {
+            message = "Notification";
+        }
 
 
         $.ajax({
@@ -1021,8 +597,6 @@ include('../login-system-main/connect/connection.php');
             }
         });
     }
-
-
 
 
     // click like_button
@@ -1089,12 +663,6 @@ include('../login-system-main/connect/connection.php');
 
             const postuserId = toggleBtn.dataset.userId;
             const logInuser = sessionStorage.getItem('userId');
-            console.log(postuserId);
-
-
-            addtolocalDB(postuserId, "post-comment", logInuser, questionId, false, "");
-
-
 
 
             $.ajax({
@@ -1108,7 +676,7 @@ include('../login-system-main/connect/connection.php');
                 success: function (response) {
                     console.log(response);
                     if (response.success === true && Array.isArray(response.comments)) {
-                        populateCommentBox(response.comments, commentBox);
+                        populateCommentBox(response.comments, commentBox, postuserId, logInuser, questionId);
                     } else {
                         commentBox.innerHTML = '<p>No comments found for this question.</p>';
                     }
@@ -1122,59 +690,114 @@ include('../login-system-main/connect/connection.php');
 
 
             // This function will take the array of comments and the target div
-            function populateCommentBox(comments, targetCommentBox) {
-
+            function populateCommentBox(comments, targetCommentBox, postuserId, logInuser, questionId) {
                 targetCommentBox.innerHTML = '';
 
                 // comment-input-section
                 const newCommentInputSection = document.createElement('div');
                 newCommentInputSection.className = 'comment-input-section';
-                newCommentInputSection.style.display = 'flex';
-                newCommentInputSection.style.alignItems = 'flex-start';
-                newCommentInputSection.style.marginTop = '10px';
 
 
                 newCommentInputSection.innerHTML = `
-        <img
-            onerror="this.src ='https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg'"
-            src="${userProfilePic}"
-            alt="Profile Picture"
-            class="post-profile-pic"
-            style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; margin-right: 10px;">
-        <div>
-            <input type="text" placeholder="Add a comment..." class="comment-input"
-               style="flex-grow: 1; padding: 12px; border: 1px solid #e0e0e0; border-radius: 24px; outline: none; font-size: 15px; width: 20rem;">
-
-            <button class="post-comment-btn" style="margin-left:10px; padding:8px 16px; border:none; background:#1877f2; color:white; border-radius:20px; cursor:pointer; margin-top:10px;">
-                Post
-            </button>
-        </div>
-    `;
+                <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                    <img
+                        onerror="this.src='https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg'"
+                        src="${userProfilePic}"
+                        alt="Profile Picture"
+                        class="post-profile-pic"
+                        style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; margin-right: 10px;">
+                    <input type="text" placeholder="Add a comment..." class="comment-input"
+                        style="flex-grow: 1; padding: 12px; border: 1px solid #e0e0e0; border-radius: 24px; outline: none; font-size: 15px; width: 20rem;">
+                    <button class="post-comment-btn" data-question-id="${questionId}"
+                        style="margin-left:10px; padding:8px 16px; border:none; background:#1877f2; color:white; border-radius:20px; cursor:pointer;">
+                        Post
+                    </button>
+                </div>
+            `;
 
                 targetCommentBox.appendChild(newCommentInputSection);
 
+                // Add event listener to the post comment button
+                const postCommentBtn = newCommentInputSection.querySelector('.post-comment-btn');
+                const commentInput = newCommentInputSection.querySelector('.comment-input');
 
-                // comments-users
+                postCommentBtn.addEventListener('click', function() {
+                    const commentText = commentInput.value.trim();
+                    if (commentText) {
+                        postComment(commentText, questionId, targetCommentBox,userProfilePic);
+                        commentInput.value = ''; // Clear input after posting
+                    }
+                });
+
+
+                // Show existing comments
                 comments.forEach(comment => {
                     const commentDiv = document.createElement('div');
                     commentDiv.className = 'single-comment';
 
                     commentDiv.innerHTML = `
-            <div class="comment-header" data-username="${comment.username}" style="display: flex; align-items: center; margin-bottom: 5px; cursor: pointer">
-
-                <img src="${encodedProfileImage(comment.profile_pic)}" alt="profile not found"
-                     style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
-                <div>
-                    <div class="comment-author" style="font-weight: bold;">${comment.username}</div>
-                    <div class="comment-profession" style="font-size: 12px; color: #666;">${comment.profession}</div>
-                </div>
-            </div>
-            <div class="comment-text" style="margin-left: 40px; font-size: 14px;">
-                ${comment.comment_text}
-            </div>
-            <hr style="border: none; border-top: 1px solid #eee; margin: 10px 0;">
-        `;
+                    <div class="comment-header" data-username="${comment.username}" style="display: flex; align-items: center; margin-bottom: 5px;">
+                        <img src="${encodedProfileImage(comment.profile_pic)}" alt="profile not found"
+                            style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
+                        <div>
+                            <div class="comment-author" style="font-weight: bold;">${comment.username}</div>
+                            <div class="comment-profession" style="font-size: 12px; color: #666;">${comment.profession}</div>
+                        </div>
+                    </div>
+                    <div class="comment-text" style="margin-left: 40px; font-size: 14px;">
+                        ${comment.comment_text}
+                    </div>
+                    <hr style="border: none; border-top: 1px solid #eee; margin: 10px 0;">
+                `;
                     targetCommentBox.appendChild(commentDiv);
+                });
+            }
+
+
+            function postComment(commentText, questionId, commentBox) {
+                const logInuser = sessionStorage.getItem('userId');
+                const userProfilePic = sessionStorage.getItem('profile_pic') || '';
+
+                addtolocalDB(postuserId, "post-comment", logInuser, questionId, false, commentText);
+
+                $.ajax({
+                    url: '../feed/comment_api/post_comment.php',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        user_id: logInuser,
+                        question_id: questionId,
+                        comment_text: commentText
+                    },
+                    success: function (response) {
+                        console.log("POST COMMENT RESPONSE:", response);
+                        if (response.success) {
+                            const commentDiv = document.createElement('div');
+                            commentDiv.className = 'single-comment';
+
+                            commentDiv.innerHTML = `
+                    <div class="comment-header" style="display: flex; align-items: center; margin-bottom: 5px;">
+                        <img src="${encodedProfileImage(userProfilePic)}" alt="profile"
+                            style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
+                        <div>
+                            <div class="comment-author" style="font-weight: bold;">You</div>
+                            <div class="comment-profession" style="font-size: 12px; color: #666;">Student</div>
+                        </div>
+                    </div>
+                    <div class="comment-text" style="margin-left: 40px; font-size: 14px;">
+                        ${commentText}
+                    </div>
+                    <hr style="border: none; border-top: 1px solid #eee; margin: 10px 0;">
+                `;
+
+                            commentBox.appendChild(commentDiv);
+                        } else {
+                            alert("Failed to post comment: " + response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error posting comment:', error);
+                    }
                 });
             }
         }
