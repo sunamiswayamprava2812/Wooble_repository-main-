@@ -761,7 +761,7 @@ include('../login-system-main/connect/connection.php');
                 addtolocalDB(postuserId, "post-comment", logInuser, questionId, false, commentText);
 
                 $.ajax({
-                    url: '../feed/comment_api/post_comment.php',
+                    url: '../feed/component/post_comment.php',
                     method: 'POST',
                     dataType: 'json',
                     data: {
@@ -780,7 +780,7 @@ include('../login-system-main/connect/connection.php');
                         <img src="${encodedProfileImage(userProfilePic)}" alt="profile"
                             style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
                         <div>
-                            <div class="comment-author" style="font-weight: bold;">You</div>
+                            <div class="comment-author" style="font-weight: bold;">you</div>
                             <div class="comment-profession" style="font-size: 12px; color: #666;">Student</div>
                         </div>
                     </div>

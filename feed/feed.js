@@ -41,7 +41,7 @@ plusBtn.addEventListener("click", () => {
 
 
 // seemore seeless toggle button
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
     const seeMoreBtn = document.querySelector('.see-more-btn');
     const profilecardsitem = document.querySelector('.profile-cards-item');
 

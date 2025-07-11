@@ -12,7 +12,6 @@ $message = $data['message'] ?? null;
 $is_read = $data['is_read'] ?? 0;
 $created_at = $data['created_at'] ?? date('Y-m-d H:i:s');
 
-
 if (!$user_id) {
     echo json_encode(["status" => "error", "message" => "Missing required fields."]);
     exit;
