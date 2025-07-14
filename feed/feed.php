@@ -549,15 +549,14 @@ include('../login-system-main/connect/connection.php');
 
         `;
             postsContainer.appendChild(postCard);
+            
         });
     }
 
 
-
-
     // add notification to localDB
 
-    function addtolocalDB(postuserId, type, logInuser, questionid, isLiked, commentText) {
+    function addNotificationtolocalDB(postuserId, type, logInuser, questionid, isLiked, commentText) {
         console.log('add to local function execute');
         console.log('post user Id', postuserId);
         console.log('logInuser', logInuser);
@@ -610,7 +609,7 @@ include('../login-system-main/connect/connection.php');
 
             const isLiked = likeBtn.dataset.liked === "true";
 
-            addtolocalDB(postuserId, 'post-like', logInuser, questionid, isLiked);
+            addNotificationtolocalDB(postuserId, 'post-like', logInuser, questionid, isLiked);
 
             $.ajax({
                 url: 'https://wooble.io/feed/discussion_api/topic_like_dislike.php',
@@ -663,6 +662,7 @@ include('../login-system-main/connect/connection.php');
 
             const postuserId = toggleBtn.dataset.userId;
             const logInuser = sessionStorage.getItem('userId');
+            console.log(logInuser, questionId);
 
 
             $.ajax({
@@ -730,7 +730,7 @@ include('../login-system-main/connect/connection.php');
                 });
 
 
-                // Show existing comments
+                // Show existing comments(other users)
                 comments.forEach(comment => {
                     const commentDiv = document.createElement('div');
                     commentDiv.className = 'single-comment';
@@ -753,12 +753,36 @@ include('../login-system-main/connect/connection.php');
                 });
             }
 
+            function addAnswerServer(logInuser, questionId, commentText){
 
+                $.ajax({
+                    url: 'https://wooble.io/feed/discussion_api/add_answer.php',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        answered_by_user_id: logInuser,
+                        is_anonymous : 0,
+                        question_id: questionId,
+                        answer_text: commentText
+                    }),
+                    success: function (response) {
+                         console.log("POST COMMENT RESPONSE server:", response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error posting comment to server:', error);
+                    }
+                });
+            }
+
+            // for logger comments
             function postComment(commentText, questionId, commentBox) {
                 const logInuser = sessionStorage.getItem('userId');
-                const userProfilePic = sessionStorage.getItem('profile_pic') || '';
+                const username = sessionStorage.getItem('username');
+                console.log("userProfilePic",userProfilePic);
 
-                addtolocalDB(postuserId, "post-comment", logInuser, questionId, false, commentText);
+                addNotificationtolocalDB(postuserId, "post-comment", logInuser, questionId, false, commentText);
+                addAnswerServer(logInuser, questionId, commentText)
 
                 $.ajax({
                     url: '../feed/component/post_comment.php',
@@ -776,23 +800,39 @@ include('../login-system-main/connect/connection.php');
                             commentDiv.className = 'single-comment';
 
                             commentDiv.innerHTML = `
-                    <div class="comment-header" style="display: flex; align-items: center; margin-bottom: 5px;">
-                        <img src="${encodedProfileImage(userProfilePic)}" alt="profile"
-                            style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
-                        <div>
-                            <div class="comment-author" style="font-weight: bold;">you</div>
-                            <div class="comment-profession" style="font-size: 12px; color: #666;">Student</div>
-                        </div>
-                    </div>
-                    <div class="comment-text" style="margin-left: 40px; font-size: 14px;">
-                        ${commentText}
-                    </div>
-                    <hr style="border: none; border-top: 1px solid #eee; margin: 10px 0;">
-                `;
+            <div class="comment-header" style="display: flex; align-items: center; margin-bottom: 5px;">
+                <img src="${userProfilePic}" alt="profile"
+                    style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
+                <div>
+                    <div class="comment-author" style="font-weight: bold;">${username}</div>
+                    <div class="comment-profession" style="font-size: 12px; color: #666;">${response.profession || "null"}</div>
+                </div>
+            </div>
+            <div class="comment-text" style="margin-left: 40px; font-size: 14px;">
+                ${commentText}
+            </div>
+            <hr style="border: none; border-top: 1px solid #eee; margin: 10px 0;">
+        `;
 
                             commentBox.appendChild(commentDiv);
+
+                            // Increment the comment count in the UI
+                            const postCard = commentBox.closest('.post-card');
+                            if (postCard) {
+                                // Find the comment count <p> (should be the second <p> in the flex div)
+                                const countDiv = postCard.querySelector("div[style*='font-size: 10px']");
+                                if (countDiv) {
+                                    const commentCountElem = countDiv.querySelectorAll('p')[1];
+                                    if (commentCountElem) {
+                                        // Extract the current number, increment, and update the text
+                                        let currentCount = parseInt(commentCountElem.textContent) || 0;
+                                        currentCount++;
+                                        commentCountElem.textContent = `${currentCount} Comment`;
+                                    }
+                                }
+                            }
                         } else {
-                            alert("Failed to post comment: " + response.message);
+                            console.log()("Failed to post comment: " + response.message);
                         }
                     },
                     error: function (xhr, status, error) {
