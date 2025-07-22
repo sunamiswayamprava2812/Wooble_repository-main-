@@ -15,7 +15,7 @@ include('../login-system-main/connect/connection.php');
     <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.4/dist/index.min.js"></script>
 
 </head>
-<body>
+  <body>
 <!-- Top Navigation Bar -->
 <?php include 'component/f-nav.php'; ?>
 
