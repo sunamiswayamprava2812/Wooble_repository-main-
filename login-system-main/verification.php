@@ -121,6 +121,8 @@ if (isset($_SESSION['mail']) && !empty($_SESSION['mail'])) {
 }
 ?>
 
+var registeredEmail = "<?php echo isset($_SESSION['mail']) ? $_SESSION['mail'] : ''; ?>";
+
 $('#sendMailBtn').on('click', function() {
     var email = $('#email').val();
     if (!email) {
@@ -169,7 +171,7 @@ $('#verifyOtpBtn').on('click', function() {
                     type: 'POST',
                     dataType: 'json',
                     data: {
-                        email: $('#email').val()
+                        email: registeredEmail
                     },
                     success: function (response) {
                         console.log('Data received:', response);

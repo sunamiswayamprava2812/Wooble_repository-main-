@@ -864,6 +864,8 @@ include('../login-system-main/connect/connection.php');
             console.log("Navigating to profile for:", username);
             window.location.href = '../profile/profile.php?username=' + username;
         }
+
+
     });
 
 

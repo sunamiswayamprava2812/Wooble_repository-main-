@@ -15,7 +15,7 @@ if (isset($_POST["send"])) {
     $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
     $mail->Username   = 'sunami@wooble.org';
-    $mail->Password   = 'tsxtcqgklqhcjixi';
+    $mail->Password   = 'nqqdsihpxjnynzaq';
     $mail->SMTPSecure = 'ssl';
     $mail->Port       = 465;
 

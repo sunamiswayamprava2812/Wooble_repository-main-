@@ -125,7 +125,7 @@
             $mail->SMTPSecure='tls';
 
             $mail->Username='sunami@wooble.org';
-            $mail->Password='tqztennlqdpgjhho';
+            $mail->Password='nqqdsihpxjnynzaq';
 
             $mail->SMTPDebug = 2;
             $mail->Debugoutput = 'html';

@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
             $mail->Username = 'sunami@wooble.org';
-            $mail->Password = 'tqztennlqdpgjhho';
+            $mail->Password = 'nqqdsihpxjnynzaq';
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 

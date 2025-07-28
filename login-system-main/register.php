@@ -38,7 +38,7 @@ if (isset($_POST["register"])) {
             $mail->SMTPAuth = true;
             $mail->SMTPSecure = 'tls';
             $mail->Username = 'sunami@wooble.org';
-            $mail->Password = 'tqztennlqdpgjhho';
+            $mail->Password = 'nqqdsihpxjnynzaq';
 
             $mail->setFrom('sunami@wooble.org', 'OTP Verification');
             $mail->addAddress($email);
